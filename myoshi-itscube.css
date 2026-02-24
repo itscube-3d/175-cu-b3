@@ -1,0 +1,439 @@
+/* ===================== KEYFRAMES ===================== */
+@keyframes bg-loop{
+  0%   { background-position: 0 0, 0 0, 0 0, 0 -240px; }
+  100% { background-position: 0 44px, 44px 0, 640px 0, 0 240px; }
+}
+@keyframes bg-flicker{
+  0%, 90%, 100% { opacity: .85; }
+  91% { opacity: .72; }
+  94% { opacity: .90; }
+  96% { opacity: .78; }
+}
+@keyframes bg-jitter{
+  0%,100% { transform: translate3d(0,0,0); }
+  12% { transform: translate3d(.6px,0,0); }
+  24% { transform: translate3d(-.6px,0,0); }
+  38% { transform: translate3d(1px,.2px,0); }
+  52% { transform: translate3d(-1px,-.2px,0); }
+  70% { transform: translate3d(.6px,0,0); }
+}
+@keyframes grain{
+  0%   { transform: translate3d(0,0,0); opacity: .55; }
+  25%  { transform: translate3d(-1.2%, 0.8%, 0); }
+  50%  { transform: translate3d(1.1%, -1%, 0); opacity: .48; }
+  75%  { transform: translate3d(-0.6%, -1.1%, 0); }
+  100% { transform: translate3d(0,0,0); opacity: .55; }
+}
+@keyframes scan{
+  0%   { transform: translateY(-20px); opacity: 0; }
+  10%  { opacity: .32; }
+  90%  { opacity: .32; }
+  100% { transform: translateY(calc(100% + 20px)); opacity: 0; }
+}
+@keyframes glitch-sweep{
+  0%   { background-position: 0 0, 0 0; opacity: .14; }
+  35%  { background-position: 260px 0, 0 120px; opacity: .20; }
+  70%  { background-position: 640px 0, 0 260px; opacity: .13; }
+  100% { background-position: 980px 0, 0 380px; opacity: .18; }
+}
+@keyframes border-pulse{
+  0%,100% { border-color: rgba(58,134,255,.18); }
+  50%     { border-color: rgba(124,77,255,.34); }
+}
+@keyframes sheen{
+  0%   { transform: translateX(-70%) rotate(10deg); opacity: 0; }
+  15%  { opacity: .22; }
+  55%  { opacity: .10; }
+  100% { transform: translateX(70%) rotate(10deg); opacity: 0; }
+}
+@keyframes sigil-spin{
+  to { transform: rotate(360deg); }
+}
+
+/* ===================== WRAPPER / PALETTE ===================== */
+.profile-page.profile-custom-css{
+  --bg: #050813;
+  --panel2: rgba(6, 10, 24, .78);
+
+  --text: #cfe0ff;
+  --muted: rgba(207,224,255,.62);
+
+  --blueGlow: rgba(58,134,255,.45);
+  --plumGlow: rgba(124,77,255,.35);
+
+  position: relative !important;
+  min-height: 100vh !important;
+  isolation: isolate !important;
+  overflow-x: hidden !important;
+
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+
+  margin-bottom: -14px !important;
+}
+
+/* ===================== BACKGROUND: LOOPING SCAN + GLITCH ===================== */
+.profile-page.profile-custom-css::before{
+  content:"" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image:
+    /* 1) horizontal grid */
+    linear-gradient(rgba(58,134,255,.030) 1px, transparent 1px),
+    /* 2) vertical grid */
+    linear-gradient(90deg, rgba(58,134,255,.030) 1px, transparent 1px),
+    /* 3) glitch micro-lines */
+    repeating-linear-gradient(90deg,
+      rgba(58,134,255,0) 0 10px,
+      rgba(58,134,255,.10) 10px 11px
+    ),
+    /* 4) scan band */
+    linear-gradient(180deg,
+      transparent 0%,
+      rgba(58,134,255,.00) 35%,
+      rgba(58,134,255,.10) 46%,
+      rgba(255,255,255,.12) 50%,
+      rgba(124,77,255,.08) 54%,
+      rgba(58,134,255,.00) 66%,
+      transparent 100%
+    ) !important;
+
+  background-size:
+    44px 44px,
+    44px 44px,
+    320px 100%,
+    100% 280px !important;
+
+  background-repeat: repeat !important;
+  mix-blend-mode: screen !important;
+
+  opacity: .85 !important;
+  will-change: background-position, transform, opacity !important;
+
+  animation:
+    bg-loop 12s linear infinite,
+    bg-jitter 3.6s steps(7,end) infinite,
+    bg-flicker 9s steps(1,end) infinite !important;
+}
+
+.profile-page.profile-custom-css::after{
+  content:"" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(58,134,255,.14) 0%, transparent 60%),
+    radial-gradient(ellipse at 18% 18%, rgba(124,77,255,.12) 0%, transparent 54%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px) !important;
+
+  mix-blend-mode: screen !important;
+  opacity: .55 !important;
+
+  animation:
+    grain .9s steps(2,end) infinite,
+    bg-flicker 12s steps(1,end) infinite !important;
+}
+
+/* Keep real content above overlays */
+.profile-page.profile-custom-css .card,
+.profile-page.profile-custom-css .sidebar,
+.profile-page.profile-custom-css .lattice-about{
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* ===================== CARDS ===================== */
+.profile-page.profile-custom-css .card{
+  background: rgba(6,10,26,.35) !important;
+  backdrop-filter: blur(10px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.35) !important;
+
+  border: 1px solid rgba(58,134,255,.18) !important;
+  border-radius: 2px !important;
+
+  overflow: hidden !important;
+  transform: translateZ(0) !important;
+
+  transition: transform .25s ease, border-color .25s ease !important;
+  animation: border-pulse 4.2s ease-in-out infinite !important;
+}
+.profile-page.profile-custom-css .card:hover{
+  transform: translateY(-2px) scale(1.006) !important;
+  border-color: rgba(124,77,255,.36) !important;
+}
+.profile-page.profile-custom-css .card::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
+    radial-gradient(circle at 30% 20%, rgba(58,134,255,.10), transparent 50%),
+    radial-gradient(circle at 80% 10%, rgba(124,77,255,.08), transparent 55%) !important;
+  opacity: .85 !important;
+}
+.profile-page.profile-custom-css .card::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+
+  background-image:
+    repeating-linear-gradient(90deg,
+      rgba(58,134,255,0) 0 10px,
+      rgba(58,134,255,.10) 10px 11px
+    ),
+    repeating-linear-gradient(0deg,
+      rgba(124,77,255,0) 0 18px,
+      rgba(124,77,255,.08) 18px 19px
+    ) !important;
+
+  mix-blend-mode: screen !important;
+  opacity: .18 !important;
+  animation: glitch-sweep 7s linear infinite !important;
+}
+.profile-page.profile-custom-css .card-header,
+.profile-page.profile-custom-css .card-body{
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Header + sheen */
+.profile-page.profile-custom-css .card-header{
+  background: linear-gradient(90deg, rgba(58,134,255,.18), rgba(6,10,26,0), rgba(124,77,255,.16)) !important;
+  border-bottom: 1px solid rgba(58,134,255,.20) !important;
+
+  color: #e9f0ff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 3px !important;
+  font-weight: 650 !important;
+  font-size: 11px !important;
+  overflow: hidden !important;
+}
+.profile-page.profile-custom-css .card-header::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-40% -20% !important;
+  z-index:2 !important;
+  pointer-events:none !important;
+
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent) !important;
+  animation: sheen 6.5s ease-in-out infinite !important;
+}
+
+/* Body scanline */
+.profile-page.profile-custom-css .card-body{
+  background: transparent !important;
+  border: none !important;
+}
+.profile-page.profile-custom-css .card-body::before{
+  content:"" !important;
+  position:absolute !important;
+  left:0 !important;
+  top:-20px !important;
+  width:100% !important;
+  height:2px !important;
+  background: rgba(58,134,255,.25) !important;
+  pointer-events:none !important;
+  animation: scan 8.5s linear infinite !important;
+}
+
+/* ===================== TEXT + LINKS ===================== */
+.profile-page.profile-custom-css p,
+.profile-page.profile-custom-css span,
+.profile-page.profile-custom-css li,
+.profile-page.profile-custom-css td,
+.profile-page.profile-custom-css th,
+.profile-page.profile-custom-css div{
+  color: var(--text) !important;
+  text-shadow: none !important;
+}
+.profile-page.profile-custom-css .profile-username,
+.profile-page.profile-custom-css .stats-table td:first-child{
+  color: var(--muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 10px !important;
+}
+.profile-page.profile-custom-css a{
+  color: #9fc4ff !important;
+  text-decoration: none !important;
+  transition: color .25s ease, text-shadow .25s ease !important;
+}
+.profile-page.profile-custom-css a:hover{
+  color: #ffffff !important;
+  text-shadow: 0 0 10px var(--blueGlow), 0 0 14px var(--plumGlow) !important;
+}
+
+/* ===================== SOCIAL LINKS ===================== */
+.profile-page.profile-custom-css .social-link-item{
+  border: 1px solid rgba(58,134,255,.14) !important;
+  background: rgba(6,10,26,.40) !important;
+  transition: all .25s ease !important;
+}
+.profile-page.profile-custom-css .social-link-item:hover{
+  border-color: rgba(124,77,255,.30) !important;
+  background: rgba(124,77,255,.06) !important;
+}
+.profile-page.profile-custom-css .social-link-platform{
+  color: rgba(58,134,255,.95) !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+}
+
+/* ===================== IMAGES ===================== */
+.profile-page.profile-custom-css img,
+.profile-page.profile-custom-css .avatar,
+.profile-page.profile-custom-css [class*="avatar"],
+.profile-page.profile-custom-css [class*="profile"] img,
+.profile-page.profile-custom-css [class*="friend"] img{
+  border-radius: 2px !important;
+  border: 1px solid rgba(58,134,255,.18) !important;
+  box-shadow: 0 0 14px rgba(58,134,255,.10), 0 0 18px rgba(124,77,255,.06) !important;
+  transition: all .25s ease !important;
+}
+.profile-page.profile-custom-css img:hover,
+.profile-page.profile-custom-css [class*="avatar"]:hover{
+  border-color: rgba(124,77,255,.38) !important;
+  box-shadow: 0 0 18px rgba(58,134,255,.18), 0 0 26px rgba(124,77,255,.14) !important;
+  transform: scale(1.02) !important;
+}
+
+/* ===================== BUTTONS ===================== */
+.profile-page.profile-custom-css .action-btn,
+.profile-page.profile-custom-css button,
+.profile-page.profile-custom-css [class*="btn"]{
+  background: transparent !important;
+  border: 1px solid rgba(58,134,255,.32) !important;
+  color: #9fc4ff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-size: 10px !important;
+  font-weight: 650 !important;
+  border-radius: 1px !important;
+  transition: all .2s ease !important;
+  box-shadow: none !important;
+}
+.profile-page.profile-custom-css .action-btn:hover,
+.profile-page.profile-custom-css button:hover,
+.profile-page.profile-custom-css [class*="btn"]:hover{
+  background: rgba(58,134,255,.08) !important;
+  border-color: rgba(124,77,255,.55) !important;
+  color: #fff !important;
+  box-shadow: 0 0 14px rgba(58,134,255,.14), inset 0 0 12px rgba(124,77,255,.06) !important;
+}
+
+/* ===================== SIDEBAR ===================== */
+.profile-page.profile-custom-css .sidebar{
+  background: var(--panel2) !important;
+  border: 1px solid rgba(58,134,255,.10) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+/* Hide 2nd left card */
+.profile-page.profile-custom-css .profile-left .card:nth-child(2){
+  display: none !important;
+}
+
+/* ===================== LATTICE ABOUT ===================== */
+.profile-page.profile-custom-css .lattice-about{
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 22px 18px;
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+  color: #8aa4b0;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.profile-page.profile-custom-css .lattice-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+}
+.profile-page.profile-custom-css .lattice-title{
+  font-size: 12px;
+  color: #cfe9ff;
+}
+.profile-page.profile-custom-css .lattice-sigil{
+  font-size: 12px;
+  opacity: .7;
+  display: inline-block !important;
+  will-change: transform !important;
+  animation: sigil-spin 10s linear infinite !important;
+}
+
+/* Orb */
+.profile-page.profile-custom-css .lattice-orb{
+  position: absolute !important;
+  top: -26px !important;
+  right: -26px !important;
+  width: 180px !important;
+  height: 180px !important;
+  pointer-events: none !important;
+  opacity: .85 !important;
+  filter: drop-shadow(0 0 14px rgba(58,134,255,.16)) drop-shadow(0 0 18px rgba(124,77,255,.10));
+}
+.profile-page.profile-custom-css .lattice-orb::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  border-radius: 999px !important;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), transparent 42%),
+    conic-gradient(from 180deg,
+      rgba(58,134,255,.0),
+      rgba(58,134,255,.22),
+      rgba(124,77,255,.18),
+      rgba(58,134,255,.0)
+    ) !important;
+  mask: radial-gradient(circle, #000 58%, transparent 63%) !important;
+  opacity: .9 !important;
+  animation: glitch-sweep 10s linear infinite !important;
+}
+.profile-page.profile-custom-css .lattice-orb::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(58,134,255,.18) !important;
+  background:
+    repeating-linear-gradient(0deg,
+      rgba(58,134,255,.0) 0 10px,
+      rgba(58,134,255,.08) 10px 11px
+    ) !important;
+  opacity: .45 !important;
+  animation: glitch-sweep 8s linear infinite !important;
+}
+
+/* Responsive */
+@media (max-width: 720px){
+  .profile-page.profile-custom-css .lattice-grid{ grid-template-columns: 1fr !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .profile-page.profile-custom-css::before,
+  .profile-page.profile-custom-css::after,
+  .profile-page.profile-custom-css .card,
+  .profile-page.profile-custom-css .card::after,
+  .profile-page.profile-custom-css .card-body::before,
+  .profile-page.profile-custom-css .card-header::after,
+  .profile-page.profile-custom-css .lattice-sigil{
+    animation: none !important;
+    transition: none !important;
+  }
+}
