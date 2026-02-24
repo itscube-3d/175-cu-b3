@@ -107,17 +107,19 @@
 }
 
 /* ---------- brand the global MyOshi header + footer ---------- */
+.header-top {
+    border-bottom: none;
+}
+
 .header,
 .header-top,
 .header-inner{
   background: linear-gradient(180deg, rgba(10,18,44,.92), rgba(4,6,16,.92)) !important;
-  border-bottom: 1px solid rgba(58,134,255,.18) !important;
   color: #e9f0ff !important;
 }
 
 .header-nav-bar{
   background: rgba(4,6,16,.92) !important;
-  border-bottom: 1px solid rgba(124,77,255,.14) !important;
 }
 
 .header a,
@@ -136,6 +138,7 @@
   background: rgba(4,6,16,.94) !important;
   border-top: 1px solid rgba(58,134,255,.18) !important;
   color: rgba(207,224,255,.80) !important;
+  margin-top: 0;
 }
 .site-footer a{
   color: rgba(207,224,255,.85) !important;
@@ -255,22 +258,28 @@
   box-shadow: 0 0 16px rgba(58,134,255,.14), inset 0 0 14px rgba(124,77,255,.08) !important;
 }
 
+.profile-right .section-links {
+    padding: 6px 12px;
+    border-top: 1px var(--borderB) solid;
+}
+
+.profile-right .section-links a {
+    padding: 6px 12px;
+}
+
 /* the 4 big “VIEW …” buttons row */
-.profile-page.profile-custom-css .section-links,
-.profile-page.profile-custom-css .section-links a{
-  border-radius: var(--r) !important;
+.profile-page.profile-custom-css .section-links{
+    background: transparent !important;
 }
 .profile-page.profile-custom-css .section-links a{
+  border-radius: var(--r) !important;
   background: rgba(6,10,26,.32) !important;
   border: 1px solid rgba(58,134,255,.30) !important;
 }
 
 /*  Links block */
 .profile-page.profile-custom-css .social-link-item,
-.profile-page.profile-custom-css .profile-links a,
-.profile-page.profile-custom-css .profile-left .card a[href*="twitter" i],
-.profile-page.profile-custom-css .profile-left .card a[href*="bsky" i],
-.profile-page.profile-custom-css .profile-left .card a[href*="instagram" i]{
+.profile-page.profile-custom-css .profile-links a{
   display: block !important;
   background: rgba(6,10,26,.40) !important;
   border: 1px solid rgba(58,134,255,.28) !important;
@@ -329,6 +338,7 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 22px 18px;
+  padding-bottom: 0px;
   color: rgba(207,224,255,.82);
 }
 .profile-page.profile-custom-css .lattice-top{
@@ -431,6 +441,7 @@
   pointer-events: none;
   opacity: .9;
   filter: drop-shadow(0 0 10px rgba(58,134,255,.18));
+  z-index: -1;
 }
 .profile-page.profile-custom-css .lattice-cube .cube{
   position: relative;
@@ -453,6 +464,11 @@
 .profile-page.profile-custom-css .lattice-cube .f5{ transform: rotateX(90deg) translateZ(29px); }
 .profile-page.profile-custom-css .lattice-cube .f6{ transform: rotateX(-90deg) translateZ(29px); }
 
+.profile-page.profile-custom-css .lattice-foot{
+  margin-top: 12px;
+  font-size: 10px;
+}
+
 /* ---------- profile top bar / breadcrumb ---------- */
 .profile-page.profile-custom-css .profile-top-bar,
 .profile-page.profile-custom-css .profile-breadcrumb{
@@ -464,4 +480,9 @@
 .profile-page.profile-custom-css .profile-left .card:nth-of-type(2),
 .profile-page.profile-custom-css .profile-left .card:nth-of-type(4){
   display: none !important;
+}
+
+
+.comment-content > div[style*="background:var(--soft-pink)"] {
+  background: transparent !important;
 }
